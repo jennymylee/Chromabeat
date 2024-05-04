@@ -61,6 +61,7 @@ html {
     rgb(22, 22, 22) 1px,
     rgb(22, 22, 22) 4px
   );
+  z-index: 1;
 }
 
 #inner {
@@ -82,6 +83,16 @@ html {
   background: tomato;
   color: white;
   text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+img {
+  width: 100%;
+  height: auto;
+  display: block;
 }
 
 #hole {
@@ -90,7 +101,7 @@ html {
   left: 45%;
   width: 10%;
   height: 10%;
-  background: darkseagreen;
+  background: black;
   z-index: 100;
 }
 
@@ -124,7 +135,8 @@ html {
   justify-content: space-around;
 }
 
-button {
+#play,
+#stop {
   width: 80px;
   height: 50px;
   font-family: "Work Sans", sans-serif;
@@ -134,4 +146,14 @@ button {
   border: none;
   box-shadow: 0 2px rgba(245, 222, 179, 0.9);
   background: wheat;
+}
+
+.record-button {
+  border: none;
+  background: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
 }
