@@ -1,0 +1,149 @@
+@import url("https://fonts.googleapis.com/css?family=Work+Sans:600");
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html {
+  /* height: 100vh; */
+  /* background: darkseagreen; */
+  font-size: 10px;
+  font-family: "Work Sans", sans-serif;
+}
+.Record {
+  /* width: 50%;
+  height: 50%; */
+  width: 100%;
+  height: 100%;
+}
+#box,
+#vinyl {
+  display: block;
+  /* margin: 4% auto; */
+  position: relative;
+  /* width: 400px;
+  height: 400px; */
+  height: 100%;
+  aspect-ratio: 1/1;
+}
+
+.Record {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+#vinyl,
+#inner,
+#label,
+#hole {
+  border-radius: 50%;
+}
+
+#shadow {
+  border-radius: 50%;
+  position: relative;
+  display: block;
+  margin: 0 auto;
+  width: 100%;
+  height: 100%;
+  box-shadow: 2px 2px 6px 2px rgba(0, 0, 0, 0.2);
+}
+
+#vinyl {
+  position: absolute;
+  display: block;
+  margin: 0 auto;
+  width: 100%;
+  height: 100%;
+  border: 5px solid rgb(22, 22, 22);
+  background: repeating-radial-gradient(
+    circle,
+    rgba(22, 22, 22, 0.1),
+    rgba(22, 22, 22, 0.1) 1px,
+    rgb(22, 22, 22) 1px,
+    rgb(22, 22, 22) 4px
+  );
+  z-index: 1;
+}
+
+#inner {
+  position: absolute;
+  top: 33.3333%;
+  left: 33.3333%;
+  width: 33.3333%;
+  height: 33.3333%;
+  background: black;
+}
+
+#label {
+  position: relative;
+  top: 5%;
+  left: 5%;
+  width: 90%;
+  height: 90%;
+  /* padding: 0.5rem; */
+  background: tomato;
+  color: white;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+#hole {
+  position: relative;
+  top: 45%;
+  left: 45%;
+  width: 10%;
+  height: 10%;
+  background: black;
+  z-index: 100;
+}
+
+#title {
+  position: relative;
+  width: 50%;
+  height: 50%;
+  color: white;
+  text-transform: uppercase;
+  text-align: center;
+  font-size: 120%;
+}
+
+.spin-animation {
+  animation: spin 2s infinite linear;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.record-button {
+  border: none;
+  background: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+}
+
+.pause:hover,
+.play:hover {
+  cursor: pointer;
+}

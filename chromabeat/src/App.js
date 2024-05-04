@@ -1,23 +1,57 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import React, { useState } from "react";
+import Navbar from "./components/Navbar/Navbar";
+import Record from "./components/Record/Record";
+import SongTitleView from "./components/SongTitleView/SongTitleView";
+import SongControlsView from "./components/SongControlsView/SongControlsView";
+import Audio from "./components/Audio/Audio";
+import songs from "./data/songs";
 
 function App() {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [songIndex, setSongIndex] = useState(0);
+  const song = songs[songIndex];
+
+  const togglePlay = () => {
+    setIsPlaying(!isPlaying);
+  };
+
+  const handlePreviousSong = () => {
+    setSongIndex((songIndex - 1) % songs.length);
+    setIsPlaying(true);
+  };
+
+  const handleNextSong = () => {
+    setSongIndex((songIndex + 1) % songs.length);
+    setIsPlaying(true);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Navbar />
+      <div className="components">
+        <div className="left-column">
+          <SongTitleView song={song} />
+        </div>
+        <div className="middle-column">
+          <Record
+            isPlaying={isPlaying}
+            setIsPlaying={setIsPlaying}
+            togglePlay={togglePlay}
+            img={song.img}
+            album={song.album}
+          />
+          <SongControlsView
+            isPlaying={isPlaying}
+            setIsPlaying={setIsPlaying}
+            togglePlay={togglePlay}
+            handleNextSong={handleNextSong}
+            handlePreviousSong={handlePreviousSong}
+          />
+          <Audio isPlaying={isPlaying} song={songs[songIndex]} />
+        </div>
+        <div className="right-column"></div>
+      </div>
     </div>
   );
 }
