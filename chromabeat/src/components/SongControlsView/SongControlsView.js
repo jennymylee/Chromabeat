@@ -1,5 +1,5 @@
 import "./SongControlsView.css";
-import React, { useState } from "react";
+import React from "react";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import PauseIcon from "@mui/icons-material/Pause";
 import SkipPreviousIcon from "@mui/icons-material/SkipPrevious";
@@ -9,11 +9,12 @@ export default function SongControlsView(props) {
   return (
     <div className="song-controls-view">
       <div id="controls">
-        <SkipPreviousIcon
-          className="skip-prev"
-          style={{ color: "grey" }}
-          sx={{ fontSize: "32px" }}
-        />
+        <button onClick={props.handleNextSong}>
+          <SkipPreviousIcon
+            style={{ color: "grey" }}
+            sx={{ fontSize: "32px" }}
+          />
+        </button>
         <button id="play" onClick={props.togglePlay}>
           {props.isPlaying ? (
             <PauseIcon style={{ color: "grey" }} sx={{ fontSize: "32px" }} />
@@ -24,11 +25,9 @@ export default function SongControlsView(props) {
             />
           )}
         </button>
-        <SkipNextIcon
-          className="skip-next"
-          style={{ color: "grey" }}
-          sx={{ fontSize: "32px" }}
-        />
+        <button onClick={props.handleNextSong}>
+          <SkipNextIcon style={{ color: "grey" }} sx={{ fontSize: "32px" }} />
+        </button>
       </div>
       <div className="song-progress-container">
         <p className="timer-start">0:38</p>

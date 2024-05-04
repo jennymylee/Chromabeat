@@ -21,10 +21,7 @@ export default function Record(props) {
           >
             <div id="inner">
               <div id="label">
-                <img
-                  src="https://upload.wikimedia.org/wikipedia/en/5/57/Laufey_-_Everything_I_Know_About_Love.png"
-                  alt="Album Cover"
-                />
+                <img src={props.img} alt={`Album cover of "${props.album}"`} />
               </div>
             </div>
           </div>

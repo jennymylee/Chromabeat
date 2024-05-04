@@ -22,8 +22,6 @@
   font-size: 1.8rem;
   text-transform: uppercase;
   border-radius: 4px;
-  border: none;
-  background: none;
 }
 
 #play:hover,
@@ -70,4 +68,9 @@
   left: 10px;
   font-family: "Inter";
   color: grey;
+}
+
+button {
+  border: none;
+  background: none;
 }
