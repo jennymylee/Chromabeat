@@ -9,7 +9,7 @@ const songs = [
   },
   {
     id: 2,
-    title: "Rondo all Turca",
+    title: "Rondo alla Turca",
     album: "Sonata No. 11",
     artist: "Mozart",
     src: "/audio/rondoAllaTurca.mp3",
