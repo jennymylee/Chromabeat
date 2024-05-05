@@ -1,0 +1,63 @@
+@import url("https://fonts.googleapis.com/css?family=Inter");
+
+.color-picker {
+  font-family: "Inter";
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  align-items: center;
+  width: 100%;
+  height: 50%;
+}
+
+button {
+  color: white;
+  background-color: rgba(255, 255, 255, 0.1);
+  height: 100%;
+}
+
+.expanded {
+  background-color: rgba(255, 255, 255, 0.1);
+  width: 0px;
+  height: 100%;
+  transition: width 0.3s ease, height 0.3s ease; /* Add transition for smooth animation */
+}
+
+.open .expanded {
+  width: 80%; /* Adjust width when sidebar is open */
+  padding: 15px;
+}
+
+.title {
+  color: white;
+  font-weight: bold;
+  font-size: 15px;
+}
+
+.content {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  height: 100%;
+  padding: 15px;
+  gap: 15px;
+  width: 100%;
+}
+
+.color-bar {
+  width: 20px;
+  height: 100%;
+  /* margin-left: 20px; */
+}
+
+.wheel-wrapper {
+  width: 100%; /* Occupy full width of the parent */
+  max-width: 100%; /* Set maximum width */
+  position: relative;
+}
+
+.wheel-wrapper > div {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}

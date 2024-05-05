@@ -5,6 +5,7 @@ import Record from "./components/Record/Record";
 import SongTitleView from "./components/SongTitleView/SongTitleView";
 import SongControlsView from "./components/SongControlsView/SongControlsView";
 import Audio from "./components/Audio/Audio";
+import ColorPicker from "./components/ColorPicker/ColorPicker";
 import songs from "./data/songs";
 
 function App() {
@@ -50,7 +51,9 @@ function App() {
           />
           <Audio isPlaying={isPlaying} song={songs[songIndex]} />
         </div>
-        <div className="right-column"></div>
+        <div className="right-column">
+          <ColorPicker />
+        </div>
       </div>
     </div>
   );
