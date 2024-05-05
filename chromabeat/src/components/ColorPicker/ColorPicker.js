@@ -32,7 +32,7 @@ export default function ColorPicker() {
 
   return (
     <div className={`color-picker ${isOpen ? "open" : ""}`}>
-      <button onClick={toggleColorPicker}>
+      <button className="tab" onClick={toggleColorPicker}>
         {isOpen ? (
           <ArrowRightIcon style={{ color: "grey" }} sx={{ fontSize: "32px" }} />
         ) : (
