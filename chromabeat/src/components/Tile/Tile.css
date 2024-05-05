@@ -1,0 +1,4 @@
+.tile {
+  background-color: #ccc; /* Square color */
+  aspect-ratio: 1; /* Ensures each tile is a square */
+}
