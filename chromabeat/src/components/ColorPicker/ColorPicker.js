@@ -41,6 +41,16 @@ export default function ColorPicker() {
     });
   };
 
+  // Generate the gradient background CSS string
+  const gradientBackground = `linear-gradient(to bottom, ${tileColors.join(
+    ", "
+  )})`;
+
+  // Style object for the bar element
+  const barStyle = {
+    background: gradientBackground,
+  };
+
   return (
     <div className={`color-picker ${isOpen ? "open" : ""}`}>
       <button className="tab" onClick={toggleColorPicker}>
@@ -71,6 +81,7 @@ export default function ColorPicker() {
                 background: hsvaToHex(hsva),
               }}
             ></div>
+            <div className="color-bar" style={barStyle}></div>
           </div>
         </div>
       )}
