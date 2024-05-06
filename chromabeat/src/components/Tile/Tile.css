@@ -2,4 +2,5 @@
   aspect-ratio: 1; /* Ensures each tile is a square */
   margin: 2%;
   border-radius: 5%;
+  cursor: pointer;
 }
