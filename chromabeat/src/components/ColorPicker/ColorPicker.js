@@ -73,14 +73,20 @@ export default function ColorPicker() {
                   onChange={(color) => setHsva({ ...hsva, ...color.hsva })}
                 />
               </div>
+              <div className="selected-container">
+                <p className="selected-label">color selected:</p>
+                <div
+                  className="color-selected"
+                  style={{
+                    background: hsvaToHex(hsva),
+                  }}
+                >
+                  {hsvaToHex(hsva)}
+                </div>
+              </div>
               <Tiles tileColors={tileColors} setColor={setColor} />
             </div>
-            <div
-              className="color-bar"
-              style={{
-                background: hsvaToHex(hsva),
-              }}
-            ></div>
+
             <div className="color-bar" style={barStyle}></div>
           </div>
         </div>
