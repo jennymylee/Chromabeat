@@ -11,6 +11,7 @@ export default function ColorPicker() {
   const [hsva, setHsva] = useState({ h: 214, s: 43, v: 90, a: 1 });
   const wheelWrapperRef = useRef(null);
   const [wheelSize, setWheelSize] = useState(0); // Initialize with 0
+  const [tileColors, setTileColors] = useState(Array(8).fill("#ccc")); // start w 8 gray tiles
 
   useEffect(() => {
     const updateWheelSize = () => {
@@ -28,6 +29,16 @@ export default function ColorPicker() {
 
   const toggleColorPicker = () => {
     setIsOpen(!isOpen);
+  };
+
+  // gets index of tile in array to set the tile color
+  const setColor = (index) => {
+    setTileColors((prevColors) => {
+      const newColors = [...prevColors];
+      newColors[index] = hsvaToHex(hsva);
+      //console.log("new tileColors:", newColors);
+      return newColors;
+    });
   };
 
   return (
@@ -52,7 +63,7 @@ export default function ColorPicker() {
                   onChange={(color) => setHsva({ ...hsva, ...color.hsva })}
                 />
               </div>
-              <Tiles />
+              <Tiles tileColors={tileColors} setColor={setColor} />
             </div>
             <div
               className="color-bar"
