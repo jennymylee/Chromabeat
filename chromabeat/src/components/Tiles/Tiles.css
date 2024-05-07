@@ -1,0 +1,11 @@
+.tiles-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: minmax(0, 1fr); /* Each row takes up equal space */
+  gap: 3px; /* Gap between tiles */
+  width: 100%;
+  padding-right: 10px;
+}
+.tile {
+  background-color: #ccc; /* Square color */
+}
