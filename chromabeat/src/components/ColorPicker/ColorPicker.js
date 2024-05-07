@@ -91,7 +91,7 @@ export default function ColorPicker() {
     const luminance = calculateLuminance(rgb[0], rgb[1], rgb[2]);
 
     // Determine text color based on luminance
-    const textColor = luminance > 0.5 ? "black" : "white";
+    const textColor = luminance > 0.2 ? "black" : "white";
     setTextColor(textColor);
   }, [backgroundColor]);
   return (
