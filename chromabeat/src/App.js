@@ -11,6 +11,7 @@ import songs from "./data/songs";
 function App() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [songIndex, setSongIndex] = useState(0);
+  const [progress, setProgress] = useState({ dur: 0, curTime: 0 });
   const song = songs[songIndex];
 
   const togglePlay = () => {
@@ -25,6 +26,10 @@ function App() {
   const handleNextSong = () => {
     setSongIndex((songIndex + 1) % songs.length);
     setIsPlaying(true);
+  };
+
+  const handleProgress = (progress) => {
+    setProgress(progress);
   };
 
   return (
@@ -48,8 +53,14 @@ function App() {
             togglePlay={togglePlay}
             handleNextSong={handleNextSong}
             handlePreviousSong={handlePreviousSong}
+            dur={progress.dur}
+            curTime={progress.curTime}
           />
-          <Audio isPlaying={isPlaying} song={songs[songIndex]} />
+          <Audio
+            isPlaying={isPlaying}
+            song={songs[songIndex]}
+            handleProgress={handleProgress}
+          />
         </div>
         <div className="right-column">
           <ColorPicker />

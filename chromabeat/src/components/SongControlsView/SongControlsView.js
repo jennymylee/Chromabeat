@@ -30,11 +30,11 @@ export default function SongControlsView(props) {
         </button>
       </div>
       <div className="song-progress-container">
-        <p className="timer-start">0:38</p>
+        <p className="timer-start">{props.curTime}</p>
         <div className="song-progress">
           <div className="song-expired" />
         </div>
-        <p className="timer-end">3:14</p>
+        <p className="timer-end">{props.dur}</p>
       </div>
     </div>
   );
