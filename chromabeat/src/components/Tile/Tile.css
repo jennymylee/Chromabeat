@@ -13,7 +13,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: white;
+  /* color: white; */
   width: 100%;
   font-weight: bold;
   opacity: 0; /* Initially hide the text */

@@ -51,7 +51,7 @@
 .color-selected {
   width: 100%;
   height: 30px;
-  color: white;
+  /* color: white; */
   display: flex;
   align-items: center;
   justify-content: center;
