@@ -54,31 +54,34 @@ export default function Animation(props) {
     const canvas = document.getElementById("canvas1");
     const ctx = canvas.getContext("2d");
     const bufferLength = analyser.frequencyBinCount;
-    const barWidth = 15;
+    const barWidth = 5;
 
     function drawVisualiser() {
       let x = 0;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       analyser.getByteFrequencyData(dataArray);
       for (let i = 0; i < bufferLength; i++) {
-        const barHeight = dataArray[i] * 1.2;
+        const barHeight = dataArray[i] * 1.5;
         ctx.save();
         ctx.translate(canvas.width / 2, canvas.height / 2);
-        ctx.rotate((i * Math.PI * 4) / bufferLength);
-        const hue = 240 + i * 1.5;
+        ctx.rotate((i * Math.PI * 2) / bufferLength);
+        const hue = i * 20.5;
         ctx.lineWidth = barHeight / 10;
-        ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`;
+        // ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`;
         ctx.fillStyle = `hsl(${hue}, 100%, 50%)`;
-        ctx.beginPath();
-        ctx.moveTo(0, 0);
-        ctx.lineTo(0, barHeight);
-        ctx.stroke();
-        ctx.beginPath();
-        ctx.arc(0, barHeight + barHeight / 5, barHeight / 20, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.beginPath();
-        ctx.arc(0, barHeight + barHeight / 2, barHeight / 10, 0, Math.PI * 2);
-        ctx.fill();
+        ctx.fillRect(0, 0, barWidth, barHeight);
+        x += barWidth;
+
+        // ctx.beginPath();
+        // ctx.moveTo(0, 0);
+        // ctx.lineTo(0, barHeight);
+        // ctx.stroke();
+        // ctx.beginPath();
+        // ctx.arc(0, barHeight + barHeight / 5, barHeight / 20, 0, Math.PI * 2);
+        // ctx.fill();
+        // ctx.beginPath();
+        // ctx.arc(0, barHeight + barHeight / 2, barHeight / 10, 0, Math.PI * 2);
+        // ctx.fill();
         ctx.restore();
       }
       requestAnimationFrame(drawVisualiser);
