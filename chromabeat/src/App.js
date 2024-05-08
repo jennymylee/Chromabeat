@@ -37,9 +37,9 @@ function App() {
     <div className="App">
       <Navbar />
       <div className="components">
+        <Animation song={songs[songIndex]} />
         <div className="left-column">
           <SongTitleView song={song} />
-          <Animation song={songs[songIndex]} />
         </div>
         <div className="middle-column">
           <Record
