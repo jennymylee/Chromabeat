@@ -7,18 +7,20 @@ export default function Animation(props) {
   const [dataArray, setDataArray] = useState(null);
 
   function handlePlay(event) {
-    const audio1 = document.getElementById("audio1");
-    const audioContext = new AudioContext();
-    const source = audioContext.createMediaElementSource(audio1);
-    const analyzer = audioContext.createAnalyser();
-    source.connect(analyzer);
-    analyzer.connect(audioContext.destination);
-    analyzer.fftSize = 128;
-    const bufferLength = analyzer.frequencyBinCount;
-    const dataArray = new Uint8Array(bufferLength);
-    setAudioSource(source);
-    setAnalyser(analyzer);
-    setDataArray(dataArray);
+    if (!analyser) {
+      const audio1 = document.getElementById("audio1");
+      const audioContext = new AudioContext();
+      const source = audioContext.createMediaElementSource(audio1);
+      const analyzer = audioContext.createAnalyser();
+      source.connect(analyzer);
+      analyzer.connect(audioContext.destination);
+      analyzer.fftSize = 128;
+      const bufferLength = analyzer.frequencyBinCount;
+      const dataArray = new Uint8Array(bufferLength);
+      setAudioSource(source);
+      setAnalyser(analyzer);
+      setDataArray(dataArray);
+    }
   }
 
   //   function handleFileChange(event) {
