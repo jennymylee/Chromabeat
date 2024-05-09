@@ -48,10 +48,6 @@ export default function Audio(props) {
     if (analyser) {
       animate(canvas, ctx);
     }
-
-    return () => {
-      // Clean up if needed
-    };
   }, [analyser]);
 
   function handlePlay(event) {

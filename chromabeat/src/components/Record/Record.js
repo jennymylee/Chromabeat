@@ -1,15 +1,9 @@
 import "./Record.css";
-import React, { useState } from "react";
+import React from "react";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import PauseIcon from "@mui/icons-material/Pause";
 
 export default function Record(props) {
-  // const [isPlaying, setIsPlaying] = useState(false);
-
-  // const togglePlay = () => {
-  //   setIsPlaying(!isPlaying);
-  // };
-
   return (
     <div className="Record">
       <div id="box">
