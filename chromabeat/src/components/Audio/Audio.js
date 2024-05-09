@@ -75,7 +75,7 @@ export default function Audio(props) {
     if (analyser) {
       animate(canvasRef.current, canvasRef.current.getContext("2d"));
     }
-  }, [analyser]);
+  }, [analyser, props.tileColors]);
 
   let x;
   const barWidth = 15;
@@ -108,18 +108,34 @@ export default function Audio(props) {
     canvas
   ) {
     analyser.getByteFrequencyData(dataArray);
+    const tileColors = props.tileColors; // Save tileColors in a local variable
+    let colorIndex = 0; // Initialize color index
+    let barsPerColor = 50; // Number of bars per color (adjust as needed)
+    let barsDrawn = 0; // Counter for bars drawn with current color
+
     for (let i = 0; i < bufferLength; i++) {
       barHeight = dataArray[i] * 2.5;
       ctx.save();
       ctx.translate(canvas.width / 2, canvas.height / 2);
       ctx.rotate(i * 4.184);
-      const hue = 120 + i * 0.05;
-      ctx.fillStyle = `hsl(${hue}, 100%, 50%)`;
+      const hue = (i / bufferLength) * 360; // Adjust hue based on frequency data
+
+      // Use the same tile color for multiple bars
+      ctx.fillStyle = `hsl(${hue}, 100%, 50%)`; // Set dynamic hue
+      ctx.fillStyle = tileColors[colorIndex]; // Override with tile color
       ctx.beginPath();
       ctx.arc(0, barHeight / 2, barHeight / 2, 0, Math.PI / 4);
       ctx.fill();
       ctx.stroke();
       x += barWidth;
+
+      barsDrawn++;
+
+      if (barsDrawn === barsPerColor) {
+        colorIndex = (colorIndex + 1) % tileColors.length; // Move to the next color
+        barsDrawn = 0; // Reset bars drawn counter
+      }
+
       ctx.restore();
     }
   }

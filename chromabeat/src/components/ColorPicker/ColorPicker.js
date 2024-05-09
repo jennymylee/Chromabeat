@@ -6,21 +6,11 @@ import Wheel from "@uiw/react-color-wheel";
 import { hsvaToHex } from "@uiw/color-convert";
 import Tiles from "../Tiles/Tiles";
 
-export default function ColorPicker() {
+export default function ColorPicker(props) {
   const [isOpen, setIsOpen] = useState(true);
   const [hsva, setHsva] = useState({ h: 214, s: 43, v: 90, a: 1 });
   const wheelWrapperRef = useRef(null);
   const [wheelSize, setWheelSize] = useState(0); // Initialize with 0
-  const [tileColors, setTileColors] = useState([
-    "#FF5733", // Orange
-    "#9B59B6", // Purple
-    "#3498DB", // Blue
-    "#08E600", // Green
-    "#F1C40F", // Yellow
-    "#E600CF", // Hot pink
-    "#1ABC9C", // Turquoise
-    "#A93226", // Dark red
-  ]);
 
   useEffect(() => {
     const updateWheelSize = () => {
@@ -42,7 +32,7 @@ export default function ColorPicker() {
 
   // gets index of tile in array to set the tile color
   const setColor = (index) => {
-    setTileColors((prevColors) => {
+    props.setTileColors((prevColors) => {
       const newColors = [...prevColors];
       newColors[index] = hsvaToHex(hsva);
       //console.log("new tileColors:", newColors);
@@ -51,7 +41,7 @@ export default function ColorPicker() {
   };
 
   // Generate the gradient background CSS string
-  const gradientBackground = `linear-gradient(to bottom, ${tileColors.join(
+  const gradientBackground = `linear-gradient(to bottom, ${props.tileColors.join(
     ", "
   )})`;
 
@@ -129,7 +119,7 @@ export default function ColorPicker() {
                   {hsvaToHex(hsva)}
                 </div>
               </div>
-              <Tiles tileColors={tileColors} setColor={setColor} />
+              <Tiles tileColors={props.tileColors} setColor={setColor} />
             </div>
 
             <div className="color-bar" style={barStyle}></div>

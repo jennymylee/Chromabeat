@@ -14,6 +14,16 @@ function App() {
   const [songIndex, setSongIndex] = useState(0);
   const [progress, setProgress] = useState({ dur: 0, curTime: 0 });
   const song = songs[songIndex];
+  const [tileColors, setTileColors] = useState([
+    "#FF5733", // Orange
+    "#9B59B6", // Purple
+    "#3498DB", // Blue
+    "#08E600", // Green
+    "#F1C40F", // Yellow
+    "#E600CF", // Hot pink
+    "#1ABC9C", // Turquoise
+    "#A93226", // Dark red
+  ]);
 
   const togglePlay = () => {
     setIsPlaying(!isPlaying);
@@ -53,6 +63,7 @@ function App() {
             isPlaying={isPlaying}
             song={songs[songIndex]}
             handleProgress={handleProgress}
+            tileColors={tileColors}
           />
           <SongControlsView
             isPlaying={isPlaying}
@@ -65,7 +76,7 @@ function App() {
           />
         </div>
         <div className="right-column">
-          <ColorPicker />
+          <ColorPicker tileColors={tileColors} setTileColors={setTileColors} />
         </div>
       </div>
     </div>
