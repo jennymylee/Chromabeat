@@ -13,6 +13,10 @@ export default function SongControlsView(props) {
       remainingSeconds < 10 ? `0${remainingSeconds}` : remainingSeconds;
     return `${minutes}:${formattedSeconds}`;
   }
+
+  // Calculate the width of the progress bar
+  const progressBarWidth = (props.curTime / props.dur) * 100;
+
   return (
     <div className="song-controls-view">
       <div id="controls">
@@ -39,7 +43,10 @@ export default function SongControlsView(props) {
       <div className="song-progress-container">
         <p className="timer-start">{formatTime(props.curTime)}</p>
         <div className="song-progress">
-          <div className="song-expired" />
+          <div
+            className="song-expired"
+            style={{ width: `${progressBarWidth}%` }}
+          />
         </div>
         <p className="timer-end">{formatTime(props.dur)}</p>
       </div>
