@@ -8,7 +8,7 @@
   align-items: center;
   gap: 5px;
   width: 100%;
-  background-color: rgb(255, 255, 255, 0.1);
+  background-color: rgba(33, 33, 33, 0.95);
   border-radius: 5px;
   padding: 15px;
 }
@@ -30,4 +30,5 @@
   color: rgb(255, 255, 255);
   font-size: 15px;
   font-weight: bolder;
+  text-align: start;
 }

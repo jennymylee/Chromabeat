@@ -6,6 +6,17 @@ import SkipPreviousIcon from "@mui/icons-material/SkipPrevious";
 import SkipNextIcon from "@mui/icons-material/SkipNext";
 
 export default function SongControlsView(props) {
+  function formatTime(seconds) {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = Math.floor(seconds % 60);
+    const formattedSeconds =
+      remainingSeconds < 10 ? `0${remainingSeconds}` : remainingSeconds;
+    return `${minutes}:${formattedSeconds}`;
+  }
+
+  // Calculate the width of the progress bar
+  const progressBarWidth = (props.curTime / props.dur) * 100;
+
   return (
     <div className="song-controls-view">
       <div id="controls">
@@ -30,11 +41,14 @@ export default function SongControlsView(props) {
         </button>
       </div>
       <div className="song-progress-container">
-        <p className="timer-start">{props.curTime}</p>
+        <p className="timer-start">{formatTime(props.curTime)}</p>
         <div className="song-progress">
-          <div className="song-expired" />
+          <div
+            className="song-expired"
+            style={{ width: `${progressBarWidth}%` }}
+          />
         </div>
-        <p className="timer-end">{props.dur}</p>
+        <p className="timer-end">{formatTime(props.dur)}</p>
       </div>
     </div>
   );
