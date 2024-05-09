@@ -22,7 +22,7 @@
   flex-direction: column;
   width: 25%;
   padding-left: 40px;
-  z-index: 5;
+  z-index: 15;
 }
 
 .middle-column {

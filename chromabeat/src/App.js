@@ -6,7 +6,7 @@ import SongTitleView from "./components/SongTitleView/SongTitleView";
 import SongControlsView from "./components/SongControlsView/SongControlsView";
 import Audio from "./components/Audio/Audio";
 import ColorPicker from "./components/ColorPicker/ColorPicker";
-import Animation from "./components/Animation/Animation";
+// import Animation from "./components/Animation/Animation";
 import songs from "./data/songs";
 
 function App() {
@@ -37,7 +37,7 @@ function App() {
     <div className="App">
       <Navbar />
       <div className="components">
-        <Animation song={songs[songIndex]} />
+        {/* <Animation song={songs[songIndex]} /> */}
         <div className="left-column">
           <SongTitleView song={song} />
         </div>
@@ -49,6 +49,11 @@ function App() {
             img={song.img}
             album={song.album}
           />
+          <Audio
+            isPlaying={isPlaying}
+            song={songs[songIndex]}
+            handleProgress={handleProgress}
+          />
           <SongControlsView
             isPlaying={isPlaying}
             setIsPlaying={setIsPlaying}
@@ -57,11 +62,6 @@ function App() {
             handlePreviousSong={handlePreviousSong}
             dur={progress.dur}
             curTime={progress.curTime}
-          />
-          <Audio
-            isPlaying={isPlaying}
-            song={songs[songIndex]}
-            handleProgress={handleProgress}
           />
         </div>
         <div className="right-column">
