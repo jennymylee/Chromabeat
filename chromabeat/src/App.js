@@ -8,6 +8,7 @@ import Audio from "./components/Audio/Audio";
 import ColorPicker from "./components/ColorPicker/ColorPicker";
 // import Animation from "./components/Animation/Animation";
 import songs from "./data/songs";
+import AnimationEditor from "./components/AnimationEditor/AnimationEditor";
 
 function App() {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -49,7 +50,12 @@ function App() {
       <div className="components">
         {/* <Animation song={songs[songIndex]} /> */}
         <div className="left-column">
-          <SongTitleView song={song} />
+          <div className="left-1">
+            <SongTitleView song={song} />
+          </div>
+          <div className="left-2">
+            <AnimationEditor />
+          </div>
         </div>
         <div className="middle-column">
           <Record

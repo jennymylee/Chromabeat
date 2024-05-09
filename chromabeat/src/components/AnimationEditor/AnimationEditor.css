@@ -1,0 +1,44 @@
+@import url("https://fonts.googleapis.com/css?family=Inter");
+
+.animation-editor {
+  font-family: "Inter";
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+  width: 100%;
+  margin-top: 5%;
+}
+
+.tab {
+  background-color: rgba(33, 33, 33, 0.95);
+  height: 100%;
+}
+
+.expanded {
+  background-color: rgba(33, 33, 33, 0.95);
+  width: 0px;
+  height: 100%;
+  transition: width 0.3s ease, height 0.3s ease; /* Add transition for smooth animation */
+}
+
+.open .expanded {
+  width: 80%; /* Adjust width when sidebar is open */
+  padding: 15px;
+}
+
+.title {
+  color: white;
+  font-weight: bold;
+  font-size: 15px;
+}
+
+.content {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  height: 100%;
+  padding: 15px;
+  gap: 15px;
+  width: 100%;
+}
