@@ -1,10 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./Animation.css";
 
 export default function Animation(props) {
   const [audioSource, setAudioSource] = useState(null);
   const [analyser, setAnalyser] = useState(null);
   const [dataArray, setDataArray] = useState(null);
+  const canvasRef = useRef(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext("2d");
+    if (analyser) {
+      animate(canvas, ctx);
+    }
+
+    return () => {
+      // Clean up if needed
+    };
+  }, [analyser]);
 
   function handlePlay(event) {
     if (!analyser) {
@@ -14,7 +27,7 @@ export default function Animation(props) {
       const analyzer = audioContext.createAnalyser();
       source.connect(analyzer);
       analyzer.connect(audioContext.destination);
-      analyzer.fftSize = 128;
+      analyzer.fftSize = 4096;
       const bufferLength = analyzer.frequencyBinCount;
       const dataArray = new Uint8Array(bufferLength);
       setAudioSource(source);
@@ -23,87 +36,68 @@ export default function Animation(props) {
     }
   }
 
-  //   function handleFileChange(event) {
-  //     const files = event.target.files;
-  //     const audio1 = document.getElementById("audio1");
-  //     // audio1.src = URL.createObjectURL(files[0]);
-  //     audio1.src = props.song.src;
-  //     audio1.load();
-  //     audio1.play();
-
-  //     const audioContext = new AudioContext();
-  //     const source = audioContext.createMediaElementSource(audio1);
-  //     const analyzer = audioContext.createAnalyser();
-  //     source.connect(analyzer);
-  //     analyzer.connect(audioContext.destination);
-  //     analyzer.fftSize = 128;
-  //     const bufferLength = analyzer.frequencyBinCount;
-  //     const dataArray = new Uint8Array(bufferLength);
-  //     setAudioSource(source);
-  //     setAnalyser(analyzer);
-  //     setDataArray(dataArray);
-  //   }
-
   React.useEffect(() => {
     if (analyser) {
-      animate();
+      animate(canvasRef.current, canvasRef.current.getContext("2d"));
     }
   }, [analyser]);
 
-  function animate() {
-    const canvas = document.getElementById("canvas1");
-    const ctx = canvas.getContext("2d");
-    const bufferLength = analyser.frequencyBinCount;
-    const barWidth = 5;
+  let x;
+  const barWidth = 15;
+  let barHeight;
+  const bufferLength = analyser ? analyser.frequencyBinCount : 0;
 
-    function drawVisualiser() {
-      let x = 0;
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      analyser.getByteFrequencyData(dataArray);
-      for (let i = 0; i < bufferLength; i++) {
-        const barHeight = dataArray[i] * 1.5;
-        ctx.save();
-        ctx.translate(canvas.width / 2, canvas.height / 2);
-        ctx.rotate((i * Math.PI * 2) / bufferLength);
-        const hue = i * 20.5;
-        ctx.lineWidth = barHeight / 10;
-        // ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`;
-        ctx.fillStyle = `hsl(${hue}, 100%, 50%)`;
-        ctx.fillRect(0, 0, barWidth, barHeight);
-        x += barWidth;
+  function animate(canvas, ctx) {
+    x = 0;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    analyser.getByteFrequencyData(dataArray);
+    drawVisualiser(
+      bufferLength,
+      x,
+      barWidth,
+      barHeight,
+      dataArray,
+      ctx,
+      canvas
+    );
+    requestAnimationFrame(() => animate(canvas, ctx)); // Pass canvas and ctx here
+  }
 
-        // ctx.beginPath();
-        // ctx.moveTo(0, 0);
-        // ctx.lineTo(0, barHeight);
-        // ctx.stroke();
-        // ctx.beginPath();
-        // ctx.arc(0, barHeight + barHeight / 5, barHeight / 20, 0, Math.PI * 2);
-        // ctx.fill();
-        // ctx.beginPath();
-        // ctx.arc(0, barHeight + barHeight / 2, barHeight / 10, 0, Math.PI * 2);
-        // ctx.fill();
-        ctx.restore();
-      }
-      requestAnimationFrame(drawVisualiser);
+  function drawVisualiser(
+    bufferLength,
+    x,
+    barWidth,
+    barHeight,
+    dataArray,
+    ctx,
+    canvas
+  ) {
+    analyser.getByteFrequencyData(dataArray);
+    for (let i = 0; i < bufferLength; i++) {
+      barHeight = dataArray[i] * 2.5;
+      ctx.save();
+      ctx.translate(canvas.width / 2, canvas.height / 2);
+      ctx.rotate(i * 4.184);
+      const hue = 120 + i * 0.05;
+      ctx.fillStyle = `hsl(${hue}, 100%, 50%)`;
+      ctx.beginPath();
+      ctx.arc(0, barHeight / 2, barHeight / 2, 0, Math.PI / 4);
+      ctx.fill();
+      ctx.stroke();
+      x += barWidth;
+      ctx.restore();
     }
-    drawVisualiser();
   }
 
   return (
     <div id="container">
-      <canvas id="canvas1"></canvas>
+      <canvas id="canvas1" ref={canvasRef}></canvas>
       <audio
         id="audio1"
         src={props.song.src}
         controls
         onPlay={handlePlay}
       ></audio>
-      {/* <input
-        type="file"
-        id="fileupload"
-        accept="audio/*"
-        onChange={handleFileChange}
-      /> */}
     </div>
   );
 }

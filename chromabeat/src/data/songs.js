@@ -1,6 +1,14 @@
 const songs = [
   {
     id: 1,
+    title: "Candle Flame",
+    album: "Sonata No. 11",
+    artist: "Jungle (feat. Erick The Architect)",
+    src: "/audio/candleFlame.mp3",
+    img: "https://upload.wikimedia.org/wikipedia/en/3/3f/Jungle_-_Volcano.png",
+  },
+  {
+    id: 2,
     title: "Kiss the Rain",
     album: "From the Yellow Room",
     artist: "Yiruma",
@@ -8,7 +16,7 @@ const songs = [
     img: "https://upload.wikimedia.org/wikipedia/en/e/eb/Yiruma_-_From_the_yellow_room_cover.jpg",
   },
   {
-    id: 2,
+    id: 3,
     title: "Rondo alla Turca",
     album: "Sonata No. 11",
     artist: "Mozart",
