@@ -27,11 +27,11 @@
 }
 
 .left-2 {
-  display: flex;
-  width: 25%;
-  padding-left: 0;
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  left: 0;
   z-index: 15;
-  margin-top: 5%;
 }
 
 .middle-column {

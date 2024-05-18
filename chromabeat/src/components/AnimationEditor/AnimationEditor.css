@@ -2,43 +2,49 @@
 
 .animation-editor {
   font-family: "Inter";
-  display: flex;
-  flex-direction: row;
-  justify-content: start;
-  align-items: center;
-  width: 100%;
-  margin-top: 5%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  background-color: white;
+  width: 25%;
+  height: 50%;
 }
 
-.tab {
-  background-color: rgba(33, 33, 33, 0.95);
-  height: 100%;
+.quarter-circle {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  border-radius: 0 100% 0 0;
+  width: 25%;
+  height: 25%;
+  transition: transform 0.5s ease, opacity 0.5s ease; /* make it look like the circles grow/shrink */
 }
 
-.expanded {
-  background-color: rgba(33, 33, 33, 0.95);
-  width: 0px;
-  height: 100%;
-  transition: width 0.3s ease, height 0.3s ease; /* Add transition for smooth animation */
+.quarter-circle:first-child {
+  background-color: pink;
+  z-index: 3;
 }
 
-.open .expanded {
-  width: 80%; /* Adjust width when sidebar is open */
-  padding: 15px;
+.quarter-circle:nth-child(2) {
+  background-color: orange;
+  opacity: 0;
+  z-index: 2;
 }
 
-.title {
-  color: white;
-  font-weight: bold;
-  font-size: 15px;
+.quarter-circle:nth-child(3) {
+  background-color: green;
+  opacity: 0;
+  z-index: 1;
 }
 
-.content {
-  display: flex;
-  flex-direction: row;
-  justify-content: start;
-  height: 100%;
-  padding: 15px;
-  gap: 15px;
-  width: 100%;
+/* 2nd circle changes on 1st (sibling) hover */
+.quarter-circle:first-child:hover ~ .quarter-circle:nth-child(2) {
+  transform: scale(3.5);
+  opacity: 1;
+}
+
+/* 3rd circle changes on 1st (sibling) hover */
+.quarter-circle:first-child:hover ~ .quarter-circle:nth-child(3) {
+  transform: scale(6.5);
+  opacity: 1;
 }
