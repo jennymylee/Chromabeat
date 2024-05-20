@@ -18,6 +18,7 @@
   width: 25%;
   height: 25%;
   transition: transform 0.5s ease, opacity 0.5s ease; /* make it look like the circles grow/shrink */
+  cursor: pointer;
 }
 
 .quarter-circle:first-child {
@@ -25,26 +26,16 @@
   z-index: 3;
 }
 
-.quarter-circle:nth-child(2) {
+.quarter-circle.true:nth-child(2) {
   background-color: orange;
-  opacity: 0;
-  z-index: 2;
-}
-
-.quarter-circle:nth-child(3) {
-  background-color: green;
-  opacity: 0;
-  z-index: 1;
-}
-
-/* 2nd circle changes on 1st (sibling) hover */
-.quarter-circle:first-child:hover ~ .quarter-circle:nth-child(2) {
   transform: scale(3.5);
+  z-index: 2;
   opacity: 1;
 }
 
-/* 3rd circle changes on 1st (sibling) hover */
-.quarter-circle:first-child:hover ~ .quarter-circle:nth-child(3) {
+.quarter-circle.true:nth-child(3) {
   transform: scale(6.5);
+  background-color: green;
+  z-index: 1;
   opacity: 1;
 }
