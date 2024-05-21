@@ -3,39 +3,38 @@ import "./Animation.css";
 
 export default function Audio(props) {
   const audio = useRef(null);
+  const [isAnimating, setIsAnimating] = useState(false);
 
   useEffect(() => {
     if (audio.current) {
-      //console.log("audio ref:", audio.current);
       const updateProgress = () => {
         if (props.handleProgress) {
           props.handleProgress({
-            // sets dur & cur time
             dur: audio.current.duration,
             curTime: audio.current.currentTime,
           });
         }
       };
 
-      // get dur & cur time
       audio.current.addEventListener("loadedmetadata", updateProgress);
       audio.current.addEventListener("timeupdate", updateProgress);
 
-      // remove event listener
       return () => {
         audio.current.removeEventListener("loadedmetadata", updateProgress);
         audio.current.removeEventListener("timeupdate", updateProgress);
       };
     }
-  }, [props.handleProgress, props.song]); // dependency array
+  }, [props.handleProgress, props.song]);
 
   useEffect(() => {
     if (audio.current && props.isPlaying) {
       audio.current.play();
+      setIsAnimating(true);
     } else {
       audio.current.pause();
+      setIsAnimating(false);
     }
-  }, [props.isPlaying, props.song]); // dependency array
+  }, [props.isPlaying, props.song]);
 
   const [audioSource, setAudioSource] = useState(null);
   const [analyser, setAnalyser] = useState(null);
@@ -45,10 +44,20 @@ export default function Audio(props) {
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
-    if (analyser) {
-      animate(canvas, ctx);
+    let animationFrameId;
+
+    if (analyser && isAnimating) {
+      const render = () => {
+        animate(canvas, ctx);
+        animationFrameId = requestAnimationFrame(render);
+      };
+      render();
     }
-  }, [analyser]);
+
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+    };
+  }, [analyser, isAnimating]);
 
   function handlePlay(event) {
     if (!analyser) {
@@ -58,7 +67,12 @@ export default function Audio(props) {
       const analyzer = audioContext.createAnalyser();
       source.connect(analyzer);
       analyzer.connect(audioContext.destination);
-      analyzer.fftSize = 4096;
+      if (props.animationType === "leaf") {
+        analyzer.fftSize = 4096;
+      } else {
+        analyzer.fftSize = 512;
+      }
+
       const bufferLength = analyzer.frequencyBinCount;
       const dataArray = new Uint8Array(bufferLength);
       setAudioSource(source);
@@ -67,73 +81,161 @@ export default function Audio(props) {
     }
   }
 
-  useEffect(() => {
-    if (analyser) {
-      animate(canvasRef.current, canvasRef.current.getContext("2d"));
-    }
-  }, [analyser, props.tileColors]);
-
-  let x;
   const barWidth = 15;
   let barHeight;
   const bufferLength = analyser ? analyser.frequencyBinCount : 0;
 
   function animate(canvas, ctx) {
-    x = 0;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     analyser.getByteFrequencyData(dataArray);
-    drawVisualiser(
-      bufferLength,
-      x,
-      barWidth,
-      barHeight,
-      dataArray,
-      ctx,
-      canvas
-    );
-    requestAnimationFrame(() => animate(canvas, ctx)); // Pass canvas and ctx here
+
+    switch (props.animationType) {
+      case "leaf":
+        drawLeaf(bufferLength, barWidth, barHeight, dataArray, ctx, canvas);
+        break;
+      case "burst":
+        drawBurst(bufferLength, barWidth, barHeight, dataArray, ctx, canvas);
+        break;
+      case "smoke":
+        drawSmoke(bufferLength, barWidth, barHeight, dataArray, ctx, canvas);
+        break;
+      default:
+        drawLeaf(bufferLength, barWidth, barHeight, dataArray, ctx, canvas);
+        break;
+    }
   }
 
-  function drawVisualiser(
-    bufferLength,
-    x,
-    barWidth,
-    barHeight,
-    dataArray,
-    ctx,
-    canvas
-  ) {
-    analyser.getByteFrequencyData(dataArray);
-    const tileColors = props.tileColors; // Save tileColors in a local variable
-    let colorIndex = 0; // Initialize color index
-    let barsPerColor = 50; // Number of bars per color (adjust as needed)
-    let barsDrawn = 0; // Counter for bars drawn with current color
+  function drawLeaf(bufferLength, barWidth, barHeight, dataArray, ctx, canvas) {
+    const tileColors = props.tileColors;
+    let colorIndex = 0;
+    let barsPerColor = 50;
+    let barsDrawn = 0;
 
     for (let i = 0; i < bufferLength; i++) {
       barHeight = dataArray[i] * 2.5;
       ctx.save();
       ctx.translate(canvas.width / 2, canvas.height / 2);
       ctx.rotate(i * 4.184);
-      const hue = (i / bufferLength) * 360; // Adjust hue based on frequency data
-
-      // Use the same tile color for multiple bars
-      ctx.fillStyle = `hsl(${hue}, 100%, 50%)`; // Set dynamic hue
-      ctx.fillStyle = tileColors[colorIndex]; // Override with tile color
+      const hue = (i / bufferLength) * 360;
+      ctx.fillStyle = `hsl(${hue}, 100%, 50%)`;
+      ctx.fillStyle = tileColors[colorIndex];
       ctx.beginPath();
       ctx.arc(0, barHeight / 2, barHeight / 2, 0, Math.PI / 4);
       ctx.fill();
       ctx.stroke();
-      x += barWidth;
 
       barsDrawn++;
-
       if (barsDrawn === barsPerColor) {
-        colorIndex = (colorIndex + 1) % tileColors.length; // Move to the next color
-        barsDrawn = 0; // Reset bars drawn counter
+        colorIndex = (colorIndex + 1) % tileColors.length;
+        barsDrawn = 0;
       }
 
       ctx.restore();
     }
+  }
+
+  function drawBurst(
+    bufferLength,
+    barWidth,
+    barHeight,
+    dataArray,
+    ctx,
+    canvas
+  ) {
+    const tileColors = props.tileColors;
+    let colorIndex = 0;
+    let barsPerColor = 50;
+    let barsDrawn = 0;
+
+    ctx.globalCompositeOperation = "difference";
+    for (let i = 0; i < bufferLength; i++) {
+      barHeight = dataArray[i] * 2;
+      ctx.save();
+      ctx.translate(canvas.width / 2, canvas.height / 2);
+      ctx.rotate(i * 3.2);
+
+      ctx.strokeStyle = tileColors[colorIndex];
+      ctx.beginPath();
+      ctx.moveTo(0, 0);
+      ctx.lineTo(0, barHeight);
+      ctx.stroke();
+
+      barsDrawn++;
+      if (barsDrawn === barsPerColor) {
+        colorIndex = (colorIndex + 1) % tileColors.length;
+        barsDrawn = 0;
+      }
+
+      if (i > bufferLength * 0.6) {
+        ctx.beginPath();
+        ctx.arc(0, 0, barHeight / 1.5, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+
+      ctx.restore();
+    }
+  }
+
+  const particles = [];
+
+  function drawSmoke(
+    bufferLength,
+    barWidth,
+    barHeight,
+    dataArray,
+    ctx,
+    canvas
+  ) {
+    const centerX = canvas.width / 2;
+    const centerY = canvas.height / 2;
+    const tileColors = props.tileColors;
+
+    // Create new particles based on the frequency data
+    for (let i = 0; i < bufferLength; i++) {
+      const angle = (i / bufferLength) * Math.PI * 2;
+      const amplitude = dataArray[i] / 255; // Normalize amplitude to range [0, 1]
+      const speed = amplitude * 4 + 0.5; // Adjust the speed multiplier as needed
+      const size = Math.random() * 5 + 2;
+      const opacity = 0.4;
+
+      const particle = {
+        x: centerX,
+        y: centerY,
+        angle: angle,
+        speed: speed,
+        size: size,
+        opacity: opacity,
+        color: tileColors[i % tileColors.length],
+      };
+
+      particles.push(particle);
+    }
+
+    // Update and draw particles
+    for (let i = particles.length - 1; i >= 0; i--) {
+      const particle = particles[i];
+      particle.x += Math.cos(particle.angle) * particle.speed;
+      particle.y += Math.sin(particle.angle) * particle.speed;
+      particle.opacity -= 0.012;
+
+      if (particle.opacity <= 0) {
+        particles.splice(i, 1);
+        continue;
+      }
+
+      ctx.fillStyle = `rgba(${hexToRgb(particle.color)},${particle.opacity})`;
+      ctx.beginPath();
+      ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+
+  function hexToRgb(hex) {
+    const bigint = parseInt(hex.slice(1), 16);
+    const r = (bigint >> 16) & 255;
+    const g = (bigint >> 8) & 255;
+    const b = bigint & 255;
+    return `${r},${g},${b}`;
   }
 
   return (
@@ -142,7 +244,6 @@ export default function Audio(props) {
       <audio
         id="audio1"
         src={props.song.src}
-        // controls
         ref={audio}
         onPlay={handlePlay}
       ></audio>

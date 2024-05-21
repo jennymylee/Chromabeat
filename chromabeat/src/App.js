@@ -69,6 +69,7 @@ function App() {
             song={songs[songIndex]}
             handleProgress={handleProgress}
             tileColors={tileColors}
+            animationType="smoke"
           />
           <SongControlsView
             isPlaying={isPlaying}
