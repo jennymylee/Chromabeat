@@ -1,45 +1,45 @@
 import "./AnimationEditor.css";
 import React, { useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
+import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
+import { IconButton } from "@mui/material";
 
 export default function AnimationEditor() {
-  const [isOpen, setIsOpen] = useState(false);
   const [visibleCircles, setVisibleCircles] = useState(false);
   const [label, setLabel] = useState(null);
 
-  // click on circle 1
-  const handleFirstCircleClick = () => {
-    if (!visibleCircles) {
-      setVisibleCircles(true); // if circles aren't visible, clicking shows the circles
-    }
-    setLabel("circle 1"); // if circles are visible, clicking shows the label
+  // click on the build or close icon
+  const handleIconClick = () => {
+    setVisibleCircles(!visibleCircles);
   };
 
-  // click on circles 2 & 3
+  // click on circle to show label
   const handleClick = (desc) => {
-    setLabel(desc);
-  };
-
-  // close the editor
-  const closeEditor = () => {
-    setIsOpen(!isOpen);
-    setLabel(null);
+    if (visibleCircles) {
+      setLabel(desc);
+    }
   };
 
   return (
     <div className="animation-editor">
-      {/* <button className="close-btn" onClick={closeEditor}>
-        <CloseIcon />
-      </button> */}
-      <div className="quarter-circle" onClick={handleFirstCircleClick}></div>
-      <div
-        className={`quarter-circle ${visibleCircles ? "true" : ""}`} // visible if true
-        onClick={() => handleClick("circle 2")}
-      ></div>
-      <div
-        className={`quarter-circle ${visibleCircles ? "true" : ""}`} // visible if true
-        onClick={() => handleClick("circle 3")}
-      ></div>
+      <div className="quarter-circle">
+        <IconButton className="icon-btn" size="large" onClick={handleIconClick}>
+          {visibleCircles ? <CloseIcon /> : <SettingsOutlinedIcon />}
+        </IconButton>
+      </div>
+      {visibleCircles && (
+        <>
+          <div
+            className="quarter-circle true"
+            onClick={() => handleClick("circle 2")}
+          ></div>
+          <div
+            className="quarter-circle true"
+            onClick={() => handleClick("circle 3")}
+          ></div>
+        </>
+      )}
+      {label && <div className="label">{label}</div>}
     </div>
   );
 }
