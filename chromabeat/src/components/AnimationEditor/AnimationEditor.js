@@ -14,36 +14,19 @@ export default function AnimationEditor() {
 
   return (
     <div className="animation-editor">
-      <div className="knob-container">
-        <div className="knob2">
-          <Knob
-            size={150}
-            numTicks={25}
-            degrees={260}
-            min={1}
-            max={100}
-            value={pointers[1].value}
-            color={"pink"}
-            outlineColor={"purple"}
-            hue={"330"}
-            onChange={(value) => handleKnobChange(1, value)}
-          />
-        </div>
-        <div className="knob1">
-          <Knob
-            size={80}
-            numTicks={25}
-            degrees={260}
-            min={1}
-            max={100}
-            value={pointers[0].value}
-            color={"yellow"}
-            outlineColor={"red"}
-            hue={"60"}
-            onChange={(value) => handleKnobChange(0, value)}
-          />
-        </div>
-      </div>
+      <Knob
+        outerSize={150}
+        innerSize={100}
+        numTicks={25}
+        degrees={260}
+        min={1}
+        max={100}
+        value={pointers[1].value}
+        color={"pink"}
+        outlineColor={"purple"}
+        hue={"330"}
+        onChange={(value) => handleKnobChange(1, value)}
+      />
     </div>
   );
 }
