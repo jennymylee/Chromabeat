@@ -52,9 +52,7 @@ function App() {
           <div className="left-1">
             <SongTitleView song={song} />
           </div>
-          <div className="left-2">
-            <AnimationEditor />
-          </div>
+          <div className="left-2"></div>
         </div>
         <div className="middle-column">
           <Record
