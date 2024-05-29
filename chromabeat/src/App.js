@@ -1,4 +1,3 @@
-import "./App.css";
 import React, { useState } from "react";
 import Navbar from "./components/Navbar/Navbar";
 import Record from "./components/Record/Record";
@@ -8,12 +7,12 @@ import Audio from "./components/AudioAnimation/Audio";
 import ColorPicker from "./components/ColorPicker/ColorPicker";
 import songs from "./data/songs";
 import AnimationTypes from "./components/AnimationTypes/AnimationTypes";
+import "./App.css";
 
 function App() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [songIndex, setSongIndex] = useState(0);
   const [progress, setProgress] = useState({ dur: 0, curTime: 0 });
-  const song = songs[songIndex];
   const [tileColors, setTileColors] = useState([
     "#FF5733", // Orange
     "#9B59B6", // Purple
@@ -26,17 +25,21 @@ function App() {
   ]);
   const [animationType, setAnimationType] = useState("leaf");
 
+  const song = songs[songIndex];
+
   const togglePlay = () => {
     setIsPlaying(!isPlaying);
   };
 
   const handlePreviousSong = () => {
-    setSongIndex((songIndex - 1) % songs.length);
+    setSongIndex((prevIndex) =>
+      prevIndex === 0 ? songs.length - 1 : prevIndex - 1
+    );
     setIsPlaying(true);
   };
 
   const handleNextSong = () => {
-    setSongIndex((songIndex + 1) % songs.length);
+    setSongIndex((prevIndex) => (prevIndex + 1) % songs.length);
     setIsPlaying(true);
   };
 
@@ -48,7 +51,6 @@ function App() {
     <div className="App">
       <Navbar />
       <div className="components">
-        {/* <Animation song={songs[songIndex]} /> */}
         <div className="left-column">
           <div className="left-1">
             <SongTitleView song={song} />
