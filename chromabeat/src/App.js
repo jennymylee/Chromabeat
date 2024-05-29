@@ -8,6 +8,7 @@ import Audio from "./components/AudioAnimation/Audio";
 import ColorPicker from "./components/ColorPicker/ColorPicker";
 import songs from "./data/songs";
 import AnimationTypes from "./components/AnimationTypes/AnimationTypes";
+import AnimationEditor from "./components/AnimationEditor/AnimationEditor";
 
 function App() {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -54,6 +55,7 @@ function App() {
             <SongTitleView song={song} />
           </div>
           <div className="animation-controls">
+            <AnimationEditor />
             <AnimationTypes
               animationType={animationType}
               setAnimationType={setAnimationType}

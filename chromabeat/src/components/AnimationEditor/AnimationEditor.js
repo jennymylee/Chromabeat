@@ -13,10 +13,10 @@ export default function AnimationEditor() {
   };
 
   return (
-    <div className="animation-editor">
+    <div className="knob-container">
       <Knob
-        outerSize={150}
-        innerSize={100}
+        bottomSize={150}
+        topSize={100}
         numTicks={25}
         degrees={260}
         min={1}
