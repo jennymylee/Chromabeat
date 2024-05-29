@@ -7,7 +7,7 @@ import SongControlsView from "./components/SongControlsView/SongControlsView";
 import Audio from "./components/AudioAnimation/Audio";
 import ColorPicker from "./components/ColorPicker/ColorPicker";
 import songs from "./data/songs";
-import AnimationEditor from "./components/AnimationEditor/AnimationEditor";
+import AnimationTypes from "./components/AnimationTypes/AnimationTypes";
 
 function App() {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -24,6 +24,7 @@ function App() {
     "#1ABC9C", // Turquoise
     "#A93226", // Dark red
   ]);
+  const [animationType, setAnimationType] = useState("leaf");
 
   const togglePlay = () => {
     setIsPlaying(!isPlaying);
@@ -52,7 +53,12 @@ function App() {
           <div className="left-1">
             <SongTitleView song={song} />
           </div>
-          <div className="left-2"></div>
+          <div className="animation-controls">
+            <AnimationTypes
+              animationType={animationType}
+              setAnimationType={setAnimationType}
+            />
+          </div>
         </div>
         <div className="middle-column">
           <Record
@@ -67,7 +73,7 @@ function App() {
             song={songs[songIndex]}
             handleProgress={handleProgress}
             tileColors={tileColors}
-            animationType="smoke"
+            animationType={animationType}
           />
           <SongControlsView
             isPlaying={isPlaying}
