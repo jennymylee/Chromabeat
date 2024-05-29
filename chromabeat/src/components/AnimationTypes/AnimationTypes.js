@@ -4,7 +4,7 @@ import Slider from "@mui/material/Slider";
 import { styled } from "@mui/material/styles";
 
 export default function AnimationTypes(props) {
-  const [value, setValue] = useState(1);
+  const [value, setValue] = useState(0);
 
   const marks = [
     {
@@ -35,7 +35,7 @@ export default function AnimationTypes(props) {
   });
 
   return (
-    <div>
+    <div className="animation-types">
       <CustomSlider
         aria-label="Animation Type"
         value={value}

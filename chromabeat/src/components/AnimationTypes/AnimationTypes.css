@@ -1,1 +1,5 @@
-
+.animation-types {
+  background-color: rgba(33, 33, 33, 0.95);
+  border-radius: 5px;
+  padding: 30px 40px;
+}
