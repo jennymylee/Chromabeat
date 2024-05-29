@@ -38,9 +38,7 @@ export default function AnimationTypes(props) {
     <div className="animation-types">
       <CustomSlider
         aria-label="Animation Type"
-        value={value}
         onChange={handleChange}
-        valueLabelDisplay="auto"
         step={1}
         marks={marks}
         min={0}
