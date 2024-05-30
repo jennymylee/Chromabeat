@@ -15,16 +15,19 @@ export default function AnimationEditor() {
   return (
     <div className="knob-container">
       <Knob
-        bottomSize={150}
+        bottomSize={180}
         topSize={100}
         numTicks={25}
         degrees={260}
         min={1}
         max={100}
         value={pointers[1].value}
-        color={"pink"}
-        outlineColor={"purple"}
-        hue={"330"}
+        // bottomColor={"pink"}
+        // bottomOutlineColor={"purple"}
+        // bottomHue={"330"}
+        // topColor={"yellow"}
+        // topOutlineColor={"orange"}
+        // topHue={"60"}
         onChange={(value) => handleKnobChange(1, value)}
       />
     </div>

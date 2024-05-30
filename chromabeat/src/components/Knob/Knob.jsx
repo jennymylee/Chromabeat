@@ -10,9 +10,12 @@ const Knob = ({
   min,
   max,
   value,
-  color, // knob & active tick color
-  outlineColor, // outline of active tick color
-  hue, // gradient inside the knob
+  bottomColor,
+  bottomOutlineColor,
+  bottomHue,
+  topColor,
+  topOutlineColor,
+  topHue,
   onChange,
 }) => {
   const fullAngle = degrees;
@@ -84,13 +87,14 @@ const Knob = ({
   const renderTicks = (knob, deg) => {
     let ticks = [];
     const incr = fullAngle / numTicks;
+    const tickLength = knob === "bottom" ? 30 : 10;
     const tickSize =
       knob === "bottom"
         ? bottomMargin + bottomSize / 2
         : topMargin + topSize / 2;
     for (let tickDeg = startAngle; tickDeg <= endAngle; tickDeg += incr) {
       const tickStyle = {
-        height: tickSize + 10,
+        height: tickSize + tickLength,
         left: tickSize - 1,
         top: tickSize + 2,
         transform: `rotate(${tickDeg}deg)`,
@@ -116,20 +120,20 @@ const Knob = ({
   const iStyle = {
     width: bottomSize,
     height: bottomSize,
-    "--knob-bottom-inner-grip-color": color,
+    "--knob-bottom-inner-grip-color": bottomColor,
   };
 
   const oStyle = {
     ...iStyle,
     margin: bottomMargin,
-    backgroundImage: `radial-gradient(circle closest-side at 50% 50%, hsl(${hue}, ${bottomDeg}%, ${
+    backgroundImage: `radial-gradient(circle closest-side at 50% 50%, hsl(${bottomHue}, ${bottomDeg}%, ${
       bottomDeg / 5
-    }%), hsl(${hue}, 20%, ${bottomDeg / 36}%))`,
+    }%), hsl(${bottomHue}, 20%, ${bottomDeg / 36}%))`,
   };
 
   const tStyle = {
-    "--active-tick-color": color,
-    "--tick-outline-color": outlineColor || color,
+    "--active-tick-bottomColor": bottomColor,
+    "--tick-outline-bottomColor": bottomOutlineColor || bottomColor,
   };
 
   iStyle.transform = `rotate(${bottomDeg}deg)`;
@@ -143,47 +147,56 @@ const Knob = ({
   const tiStyle = {
     width: topSize,
     height: topSize,
-    "--knob-bottom-inner-grip-color": color,
+    "--knob-top-inner-grip-color": topColor,
   };
 
   const toStyle = {
     ...tiStyle,
     margin: topMargin,
-    backgroundImage: `radial-gradient(circle closest-side at 50% 50%, hsl(${hue}, ${topDeg}%, ${
+    backgroundImage: `radial-gradient(circle closest-side at 50% 50%, hsl(${topHue}, ${topDeg}%, ${
       topDeg / 5
-    }%), hsl(${hue}, 20%, ${topDeg / 36}%))`,
+    }%), hsl(${topHue}, 20%, ${topDeg / 36}%))`,
   };
 
   const ttStyle = {
-    "--active-tick-color": color,
-    "--tick-outline-color": outlineColor || color,
+    "--active-tick-topColor": topColor,
+    "--tick-outline-topColor": topOutlineColor || topColor,
   };
 
   tiStyle.transform = `rotate(${topDeg}deg)`;
 
+  const circle = {
+    height: bottomSize * 1.5,
+    width: bottomSize * 1.5,
+  };
+
   return (
     <div className="knob-container">
-      <div className="ticks" style={tStyle}>
-        {numTicks ? renderTicks("bottom", bottomDeg) : null}{" "}
+      <div className="bottom ticks" style={tStyle}>
+        {numTicks ? renderTicks("bottom", bottomDeg) : null}
+      </div>
+      <div className="circle" style={circle}></div>
+      <div className="top ticks" style={ttStyle}>
+        {numTicks ? renderTicks("top", topDeg) : null}
       </div>
       <div className="bottom-knob" style={kStyle}>
         <div
-          className="knob bottom-outer"
+          className="knob outer"
           style={oStyle}
           onMouseDown={(e) => startDrag(e, setBottomDeg, "bottom-knob")}
         >
-          <div className="knob bottom-inner" style={iStyle}>
+          <div className="knob inner" style={iStyle}>
             <div className="grip" />
           </div>
         </div>
       </div>
       <div className="top-knob" style={tkStyle}>
         <div
-          className="knob bottom-outer"
+          className="knob outer"
           style={toStyle}
           onMouseDown={(e) => startDrag(e, setTopDeg, "top-knob")}
         >
-          <div className="knob bottom-inner" style={tiStyle}>
+          <div className="knob inner" style={tiStyle}>
             <div className="grip" />
           </div>
         </div>
@@ -197,12 +210,15 @@ Knob.defaultProps = {
   topSize: 100,
   min: 10,
   max: 30,
-  numTicks: 0,
+  numTicks: 25,
   degrees: 270,
   value: 0,
-  color: "#509eec",
-  outlineColor: "#369",
-  hue: 210,
+  bottomColor: "#509eec",
+  bottomOutlineColor: "#369",
+  bottomHue: 210,
+  topColor: "#e61c36",
+  topOutlineColor: "#e67cb1",
+  topHue: 0,
 };
 
 export default Knob;

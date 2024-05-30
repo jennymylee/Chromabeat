@@ -1,3 +1,5 @@
+/* knob credit: https://codepen.io/bbx/pen/QBKYOy */
+
 .knob-container {
   position: relative;
   display: flex;
@@ -21,24 +23,28 @@
   transition: box-shadow 0.5s;
 }
 
-.tick.active {
-  box-shadow: inset 0 0 5px 2px var(--active-tick-color),
-    0 0 0 1px var(--tick-outline-color);
+.bottom .tick.active {
+  box-shadow: inset 0 0 5px 2px var(--active-tick-bottomColor),
+    0 0 0 1px var(--tick-outline-bottomColor);
 }
 
-.bottom-outer {
+.top .tick.active {
+  box-shadow: inset 0 0 5px 2px var(--active-tick-topColor),
+    0 0 0 1px var(--tick-outline-topColor);
+}
+
+.outer {
   border-radius: 50%;
   border: 1px solid #222;
   border-bottom: 5px solid #222;
-  background-image: radial-gradient(100% 70% at center, #666 6%, #333 90%);
   box-shadow: 0 5px 15px 2px black, 0 0 5px 3px black, 0 0 0 12px #444;
 }
 
-.bottom-inner {
+.inner {
   border-radius: 50%;
 }
 
-.bottom-inner .grip {
+.inner .grip {
   position: absolute;
   width: 8%;
   height: 8%;
@@ -46,8 +52,15 @@
   left: 50%;
   transform: translateX(-50%);
   border-radius: 50%;
-  background: var(--knob-bottom-inner-grip-color);
   box-shadow: 0 0 3px 1px black;
+}
+
+.top-knob .inner .grip {
+  background: var(--knob-top-inner-grip-color);
+}
+
+.bottom-knob .inner .grip {
+  background: var(--knob-bottom-inner-grip-color);
 }
 
 .bottom-knob {
@@ -68,4 +81,9 @@
   align-items: center;
   width: fit-content;
   height: fit-content;
+}
+
+.circle {
+  background-color: white;
+  border-radius: 50%;
 }
