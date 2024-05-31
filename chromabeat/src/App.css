@@ -32,6 +32,10 @@
 .animation-controls {
   padding: 40px;
   z-index: 16;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 15px;
 }
 
 .middle-column {
