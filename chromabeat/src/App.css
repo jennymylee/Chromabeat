@@ -30,12 +30,15 @@
 }
 
 .animation-controls {
-  padding: 40px;
+  padding: 20px;
   z-index: 16;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 15px;
+  align-items: center;
+  /* gap: 15px; */
+  background-color: rgba(33, 33, 33, 0.95);
+  border-radius: 5px;
 }
 
 .middle-column {
