@@ -88,7 +88,7 @@ const Knob = ({
   const renderTicks = (knob, deg) => {
     let ticks = [];
     const incr = fullAngle / numTicks;
-    const tickLength = knob === "bottom" ? 45 : 55;
+    const tickLength = knob === "bottom" ? 35 : 45;
     const tickSize =
       knob === "bottom"
         ? bottomMargin + bottomSize / 2

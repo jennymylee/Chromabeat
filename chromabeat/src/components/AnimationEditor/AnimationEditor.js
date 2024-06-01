@@ -15,8 +15,8 @@ export default function AnimationEditor() {
   return (
     <div className="knob-container">
       <Knob
-        bottomSize={160}
-        topSize={80}
+        bottomSize={130}
+        topSize={65}
         numTicks={25}
         degrees={260}
         min={1}

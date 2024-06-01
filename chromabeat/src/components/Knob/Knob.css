@@ -3,8 +3,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 300px; /* Set a fixed width for the container */
-  height: 300px; /* Set a fixed height for the container */
+  width: 250px;
+  height: 250px;
 }
 
 .ticks {
@@ -14,7 +14,7 @@
   /* display: flex; */
   /* justify-content: center;
   align-items: center; */
-  pointer-events: none; /* Ensure the ticks don't interfere with knob interaction */
+  pointer-events: none;
 }
 
 .tick {
@@ -91,12 +91,12 @@
 .top {
   z-index: 3;
   position: absolute;
-  width: 35%;
-  height: 35%;
+  width: 34%;
+  height: 34%;
 }
 
 .bottom {
   position: absolute;
-  width: 70%;
-  height: 70%;
+  width: 68%;
+  height: 68%;
 }
