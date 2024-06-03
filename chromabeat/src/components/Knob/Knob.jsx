@@ -1,7 +1,5 @@
-// export default Knob;
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Knob.css";
-// knob credit: https://codepen.io/bbx/pen/QBKYOy
 
 const Knob = ({
   blurValue,
@@ -14,7 +12,6 @@ const Knob = ({
   degrees,
   min,
   max,
-  value,
   bottomColor,
   bottomOutlineColor,
   bottomHue,
@@ -29,15 +26,18 @@ const Knob = ({
   const bottomMargin = bottomSize * 0.15;
   const topMargin = topSize * 0.15;
 
-  // update the degree
-  const [bottomDeg, setBottomDeg] = useState(
-    Math.floor(convertRange(min, max, startAngle, endAngle, value))
-  );
+  // Initialize bottomDeg to the endAngle (highest value)
+  const [bottomDeg, setBottomDeg] = useState(endAngle);
+  const [opacity, setOpacity] = useState(max);
 
-  // update the degree
-  const [topDeg, setTopDeg] = useState(
-    Math.floor(convertRange(min, max, startAngle, endAngle, value))
-  );
+  // Initialize topDeg to the startAngle (lowest value)
+  const [topDeg, setTopDeg] = useState(startAngle);
+  const [blur, setBlur] = useState(min);
+
+  useEffect(() => {
+    setOpacityValue(opacity);
+    setBlurValue(blur);
+  }, [opacity, blur, setOpacityValue, setBlurValue]);
 
   function convertRange(oldMin, oldMax, newMin, newMax, oldValue) {
     return (
@@ -45,11 +45,9 @@ const Knob = ({
     );
   }
 
-  // handle dragging of the knob
   const startDrag = (e, setDeg, knobType) => {
     e.preventDefault();
     const knob = e.target.closest(`.${knobType}`).getBoundingClientRect();
-
     const pts = {
       x: knob.left + knob.width / 2,
       y: knob.top + knob.height / 2,
@@ -57,21 +55,19 @@ const Knob = ({
 
     const moveHandler = (e) => {
       const currentDeg = getDeg(e.clientX, e.clientY, pts);
-      if (currentDeg === startAngle) {
-        setDeg(currentDeg - 1);
-      } else {
-        const newValue = Math.floor(
-          convertRange(startAngle, endAngle, min, max, currentDeg)
-        );
-        setDeg(currentDeg);
-        if (knobType === "bottom-knob") {
-          setOpacityValue(newValue); // Update the opacity value when bottom knob is dragged
-        }
-        if (knobType === "top-knob") {
-          setBlurValue(newValue); // Update the blur value when bottom knob is dragged
-        }
-        onChange(newValue);
+      const newValue = Math.floor(
+        convertRange(startAngle, endAngle, min, max, currentDeg)
+      );
+      setDeg(currentDeg);
+
+      if (knobType === "bottom-knob") {
+        setOpacity(newValue);
+        setOpacityValue(newValue);
+      } else if (knobType === "top-knob") {
+        setBlur(newValue);
+        setBlurValue(newValue);
       }
+      onChange(newValue);
     };
 
     document.addEventListener("mousemove", moveHandler);
@@ -80,7 +76,6 @@ const Knob = ({
     });
   };
 
-  // gets the degree the knob stopped at
   const getDeg = (cX, cY, pts) => {
     const x = cX - pts.x;
     const y = cY - pts.y;
@@ -90,11 +85,9 @@ const Knob = ({
     } else {
       deg += 270;
     }
-    let finalDeg = Math.min(Math.max(startAngle, deg), endAngle);
-    return finalDeg;
+    return Math.min(Math.max(startAngle, deg), endAngle);
   };
 
-  // renders the ticks based on provided ticks #
   const renderTicks = (knob, deg) => {
     let ticks = [];
     const incr = fullAngle / numTicks;
@@ -122,7 +115,6 @@ const Knob = ({
     return ticks;
   };
 
-  // BOTTOM KNOB
   const kStyle = {
     width: bottomSize * 1.3,
     height: bottomSize * 1.3,
@@ -149,7 +141,6 @@ const Knob = ({
 
   iStyle.transform = `rotate(${bottomDeg}deg)`;
 
-  // TOP KNOB
   const tkStyle = {
     width: topSize * 1.3,
     height: topSize * 1.3,
@@ -229,7 +220,6 @@ Knob.defaultProps = {
   max: 30,
   numTicks: 25,
   degrees: 270,
-  value: 0,
   bottomColor: "#509eec",
   bottomOutlineColor: "#369",
   bottomHue: 210,

@@ -136,6 +136,8 @@ function App() {
             handleProgress={handleProgress}
             tileColors={tileColors}
             animationType={animationType}
+            blurValue={blurValue}
+            opacityValue={opacityValue}
           />
           <SongControlsView
             isPlaying={isPlaying}
