@@ -23,6 +23,9 @@ export default function AnimationEditor() {
         max={100}
         value={pointers[1].value}
         onChange={(value) => handleKnobChange(1, value)}
+        topColor="#814ee6"
+        topOutlineColor="#7402e6"
+        topHue={270}
       />
     </div>
   );

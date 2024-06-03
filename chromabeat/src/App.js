@@ -1,4 +1,6 @@
 import "./App.css";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import React, { useState } from "react";
 import Navbar from "./components/Navbar/Navbar";
 import Record from "./components/Record/Record";
@@ -11,6 +13,7 @@ import AnimationTypes from "./components/AnimationTypes/AnimationTypes";
 import AnimationEditor from "./components/AnimationEditor/AnimationEditor";
 
 function App() {
+  const [isAnimationControlsOpen, setIsAnimationControlsOpen] = useState(true);
   const [isPlaying, setIsPlaying] = useState(false);
   const [songIndex, setSongIndex] = useState(0);
   const [progress, setProgress] = useState({ dur: 0, curTime: 0 });
@@ -45,6 +48,10 @@ function App() {
     setProgress(progress);
   };
 
+  const toggleAnimationControls = () => {
+    setIsAnimationControlsOpen(!isAnimationControlsOpen);
+  };
+
   return (
     <div className="App">
       <Navbar />
@@ -54,12 +61,33 @@ function App() {
           <div className="left-1">
             <SongTitleView song={song} />
           </div>
-          <div className="animation-controls">
-            <AnimationEditor />
-            <AnimationTypes
-              animationType={animationType}
-              setAnimationType={setAnimationType}
-            />
+          <div
+            className={`animation-controls ${
+              isAnimationControlsOpen ? "open" : ""
+            }`}
+          >
+            <button className="tab" onClick={toggleAnimationControls}>
+              {isAnimationControlsOpen ? (
+                <ArrowDropDownIcon
+                  style={{ color: "grey" }}
+                  sx={{ fontSize: "32px" }}
+                />
+              ) : (
+                <ArrowDropUpIcon
+                  style={{ color: "grey" }}
+                  sx={{ fontSize: "32px" }}
+                />
+              )}
+            </button>
+            {isAnimationControlsOpen && (
+              <div className="animation-expanded">
+                <AnimationEditor />
+                <AnimationTypes
+                  animationType={animationType}
+                  setAnimationType={setAnimationType}
+                />
+              </div>
+            )}
           </div>
         </div>
         <div className="middle-column">

@@ -38,8 +38,8 @@
 .outer {
   border-radius: 50%;
   border: 1px solid #222;
-  border-bottom: 5px solid #222;
-  box-shadow: 0 5px 15px 2px black, 0 0 5px 3px black, 0 0 0 12px #444;
+  /* border-bottom: 5px solid #222; */
+  box-shadow: 0 5px 15px 2px black, 0 0 5px 3px black, 0 0 0 1px #444;
 }
 
 .inner {
@@ -84,7 +84,7 @@
 .circle {
   position: absolute;
   z-index: 2;
-  background-color: rgba(33, 33, 33, 0.95);
+  background-color: rgba(33, 33, 33);
   border-radius: 50%;
 }
 
