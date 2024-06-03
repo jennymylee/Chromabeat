@@ -4,6 +4,10 @@ import "./Knob.css";
 // knob credit: https://codepen.io/bbx/pen/QBKYOy
 
 const Knob = ({
+  blurValue,
+  setBlurValue,
+  opacityValue,
+  setOpacityValue,
   bottomSize,
   topSize,
   numTicks,
@@ -33,14 +37,6 @@ const Knob = ({
   // update the degree
   const [topDeg, setTopDeg] = useState(
     Math.floor(convertRange(min, max, startAngle, endAngle, value))
-  );
-
-  const [opacityValue, setOpacityValue] = useState(
-    Math.floor(convertRange(startAngle, endAngle, min, max, bottomDeg))
-  );
-
-  const [blurValue, setBlurValue] = useState(
-    Math.floor(convertRange(startAngle, endAngle, min, max, bottomDeg))
   );
 
   function convertRange(oldMin, oldMax, newMin, newMax, oldValue) {
