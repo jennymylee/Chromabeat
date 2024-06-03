@@ -1,20 +1,15 @@
 .knob-container {
   position: relative;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 250px;
   height: 250px;
-  margin-top: 3%;
 }
 
 .ticks {
   position: absolute;
-  /* width: 50%;
-  height: 70%; */
-  /* display: flex; */
-  /* justify-content: center;
-  align-items: center; */
   pointer-events: none;
 }
 
@@ -100,4 +95,23 @@
   position: absolute;
   width: 68%;
   height: 68%;
+}
+
+.properties-label {
+  color: grey;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 190px;
+  width: 100%;
+  z-index: 3;
+}
+
+.property {
+  text-align: center;
+  width: 50%;
+  font-size: 12px;
+  font-weight: bold;
+  font-family: "Inter";
 }

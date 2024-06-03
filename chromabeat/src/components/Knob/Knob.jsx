@@ -35,6 +35,14 @@ const Knob = ({
     Math.floor(convertRange(min, max, startAngle, endAngle, value))
   );
 
+  const [opacityValue, setOpacityValue] = useState(
+    Math.floor(convertRange(startAngle, endAngle, min, max, bottomDeg))
+  );
+
+  const [blurValue, setBlurValue] = useState(
+    Math.floor(convertRange(startAngle, endAngle, min, max, bottomDeg))
+  );
+
   function convertRange(oldMin, oldMax, newMin, newMax, oldValue) {
     return (
       ((oldValue - oldMin) * (newMax - newMin)) / (oldMax - oldMin) + newMin
@@ -60,6 +68,12 @@ const Knob = ({
           convertRange(startAngle, endAngle, min, max, currentDeg)
         );
         setDeg(currentDeg);
+        if (knobType === "bottom-knob") {
+          setOpacityValue(newValue); // Update the opacity value when bottom knob is dragged
+        }
+        if (knobType === "top-knob") {
+          setBlurValue(newValue); // Update the blur value when bottom knob is dragged
+        }
         onChange(newValue);
       }
     };
@@ -172,34 +186,40 @@ const Knob = ({
   };
 
   return (
-    <div className="knob-container">
-      <div className="bottom ticks" style={tStyle}>
-        {numTicks ? renderTicks("bottom", bottomDeg) : null}
-      </div>
-      <div className="circle" style={circle}></div>
-      <div className="top ticks" style={ttStyle}>
-        {numTicks ? renderTicks("top", topDeg) : null}
-      </div>
-      <div className="bottom-knob" style={kStyle}>
-        <div
-          className="knob outer"
-          style={oStyle}
-          onMouseDown={(e) => startDrag(e, setBottomDeg, "bottom-knob")}
-        >
-          <div className="knob inner" style={iStyle}>
-            <div className="grip" />
+    <div className="knob-and-properties">
+      <div className="knob-container">
+        <div className="bottom ticks" style={tStyle}>
+          {numTicks ? renderTicks("bottom", bottomDeg) : null}
+        </div>
+        <div className="circle" style={circle}></div>
+        <div className="top ticks" style={ttStyle}>
+          {numTicks ? renderTicks("top", topDeg) : null}
+        </div>
+        <div className="bottom-knob" style={kStyle}>
+          <div
+            className="knob outer"
+            style={oStyle}
+            onMouseDown={(e) => startDrag(e, setBottomDeg, "bottom-knob")}
+          >
+            <div className="knob inner" style={iStyle}>
+              <div className="grip" />
+            </div>
           </div>
         </div>
-      </div>
-      <div className="top-knob" style={tkStyle}>
-        <div
-          className="knob outer"
-          style={toStyle}
-          onMouseDown={(e) => startDrag(e, setTopDeg, "top-knob")}
-        >
-          <div className="knob inner" style={tiStyle}>
-            <div className="grip" />
+        <div className="top-knob" style={tkStyle}>
+          <div
+            className="knob outer"
+            style={toStyle}
+            onMouseDown={(e) => startDrag(e, setTopDeg, "top-knob")}
+          >
+            <div className="knob inner" style={tiStyle}>
+              <div className="grip" />
+            </div>
           </div>
+        </div>
+        <div className="properties-label">
+          <p className="property">Blur: {blurValue}</p>
+          <p className="property">Opacity: {opacityValue}</p>
         </div>
       </div>
     </div>

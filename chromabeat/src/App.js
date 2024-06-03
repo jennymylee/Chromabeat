@@ -66,19 +66,22 @@ function App() {
               isAnimationControlsOpen ? "open" : ""
             }`}
           >
-            <button className="tab" onClick={toggleAnimationControls}>
-              {isAnimationControlsOpen ? (
-                <ArrowDropDownIcon
-                  style={{ color: "grey" }}
-                  sx={{ fontSize: "32px" }}
-                />
-              ) : (
-                <ArrowDropUpIcon
-                  style={{ color: "grey" }}
-                  sx={{ fontSize: "32px" }}
-                />
-              )}
-            </button>
+            <div className="animation-controls-tab">
+              <div className="animation-controls-label">Animation Controls</div>
+              <button className="tab" onClick={toggleAnimationControls}>
+                {isAnimationControlsOpen ? (
+                  <ArrowDropDownIcon
+                    style={{ color: "grey" }}
+                    sx={{ fontSize: "32px" }}
+                  />
+                ) : (
+                  <ArrowDropUpIcon
+                    style={{ color: "grey" }}
+                    sx={{ fontSize: "32px" }}
+                  />
+                )}
+              </button>
+            </div>
             {isAnimationControlsOpen && (
               <div className="animation-expanded">
                 <AnimationEditor />
