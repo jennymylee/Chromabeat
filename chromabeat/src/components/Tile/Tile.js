@@ -61,8 +61,8 @@ export default function Tile(props) {
           className="tile-text"
           style={{ backgroundColor, color: textColor }}
         >
-          {notes[props.noteIndex]}
-          <br />
+          {/* {notes[props.noteIndex]}
+          <br /> */}
           {props.color}
         </span>
       )}
