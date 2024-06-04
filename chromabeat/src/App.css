@@ -25,11 +25,35 @@
 .left-1 {
   padding-left: 40px;
   z-index: 15;
+  height: 20%;
+  height: 20%;
 }
 
 .animation-controls {
-  padding: 40px;
+  margin: 0px 40px;
   z-index: 16;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* gap: 15px; */
+  background-color: rgba(33, 33, 33, 0.95);
+  border-radius: 5px 5px 0px 0px;
+}
+
+.animation-controls-tab {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.animation-controls-label {
+  color: white;
+  font-family: "inter";
+  font-weight: bold;
+  font-size: 15px;
 }
 
 .middle-column {
@@ -47,4 +71,14 @@
   width: 25%;
   align-items: end;
   z-index: 5;
+}
+
+.tab {
+  background-color: rgba(33, 33, 33, 0.95);
+  height: 100%;
+}
+
+.animation-expanded {
+  height: 100%;
+  transition: width 0.3s ease, height 0.3s ease;
 }

@@ -1,3 +1,6 @@
+import "./App.css";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import React, { useState } from "react";
 import Navbar from "./components/Navbar/Navbar";
 import Record from "./components/Record/Record";
@@ -7,9 +10,11 @@ import Audio from "./components/AudioAnimation/Audio";
 import ColorPicker from "./components/ColorPicker/ColorPicker";
 import songs from "./data/songs";
 import AnimationTypes from "./components/AnimationTypes/AnimationTypes";
+import Knob from "./components/Knob/Knob";
 import "./App.css";
 
 function App() {
+  const [isAnimationControlsOpen, setIsAnimationControlsOpen] = useState(true);
   const [isPlaying, setIsPlaying] = useState(false);
   const [songIndex, setSongIndex] = useState(0);
   const [progress, setProgress] = useState({ dur: 0, curTime: 0 });
@@ -47,6 +52,21 @@ function App() {
     setProgress(progress);
   };
 
+  const toggleAnimationControls = () => {
+    setIsAnimationControlsOpen(!isAnimationControlsOpen);
+  };
+
+  const [pointers, setPointers] = useState([{ value: 0 }, { value: 20 }]);
+
+  const handleKnobChange = (index, newValue) => {
+    const newPointers = [...pointers];
+    newPointers[index].value = newValue;
+    setPointers(newPointers);
+  };
+
+  const [blurValue, setBlurValue] = useState(19);
+  const [opacityValue, setOpacityValue] = useState(19);
+
   return (
     <div className="App">
       <Navbar />
@@ -55,11 +75,54 @@ function App() {
           <div className="left-1">
             <SongTitleView song={song} />
           </div>
-          <div className="animation-controls">
-            <AnimationTypes
-              animationType={animationType}
-              setAnimationType={setAnimationType}
-            />
+          <div
+            className={`animation-controls ${
+              isAnimationControlsOpen ? "open" : ""
+            }`}
+          >
+            <div className="animation-controls-tab">
+              <div className="animation-controls-label">Animation Controls</div>
+              <button className="tab" onClick={toggleAnimationControls}>
+                {isAnimationControlsOpen ? (
+                  <ArrowDropDownIcon
+                    style={{ color: "grey" }}
+                    sx={{ fontSize: "32px" }}
+                  />
+                ) : (
+                  <ArrowDropUpIcon
+                    style={{ color: "grey" }}
+                    sx={{ fontSize: "32px" }}
+                  />
+                )}
+              </button>
+            </div>
+            {isAnimationControlsOpen && (
+              <div className="animation-expanded">
+                {pointers && (
+                  <Knob
+                    blurValue={blurValue}
+                    setBlurValue={setBlurValue}
+                    opacityValue={opacityValue}
+                    setOpacityValue={setOpacityValue}
+                    bottomSize={130}
+                    topSize={65}
+                    numTicks={25}
+                    degrees={260}
+                    min={1}
+                    max={100}
+                    value={pointers[1].value}
+                    onChange={(value) => handleKnobChange(1, value)}
+                    topColor="#814ee6"
+                    topOutlineColor="#7402e6"
+                    topHue={270}
+                  />
+                )}
+                <AnimationTypes
+                  animationType={animationType}
+                  setAnimationType={setAnimationType}
+                />
+              </div>
+            )}
           </div>
         </div>
         <div className="middle-column">
@@ -76,6 +139,8 @@ function App() {
             handleProgress={handleProgress}
             tileColors={tileColors}
             animationType={animationType}
+            blurValue={blurValue}
+            opacityValue={opacityValue}
           />
           <SongControlsView
             isPlaying={isPlaying}

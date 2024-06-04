@@ -87,6 +87,9 @@ export default function Audio(props) {
 
   function animate(canvas, ctx) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.filter = `blur(${props.blurValue / 45}px)`;
+    ctx.globalAlpha = props.opacityValue / 100;
+
     analyser.getByteFrequencyData(dataArray);
 
     switch (props.animationType) {
@@ -223,7 +226,9 @@ export default function Audio(props) {
         continue;
       }
 
-      ctx.fillStyle = `rgba(${hexToRgb(particle.color)},${particle.opacity})`;
+      ctx.fillStyle = `rgba(${hexToRgb(particle.color)},${
+        particle.opacity * (props.opacityValue / 100)
+      })`;
       ctx.beginPath();
       ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
       ctx.fill();

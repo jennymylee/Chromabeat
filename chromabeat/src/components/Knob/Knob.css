@@ -1,0 +1,119 @@
+.knob-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 250px;
+  height: 250px;
+}
+
+.ticks {
+  position: absolute;
+  pointer-events: none;
+}
+
+.tick {
+  position: absolute;
+  background: black;
+  box-shadow: inset 0 0 0 0 black;
+  width: 3px;
+  transition: box-shadow 0.5s;
+}
+
+.bottom .tick.active {
+  box-shadow: inset 0 0 5px 2px var(--active-tick-bottomColor),
+    0 0 0 1px var(--tick-outline-bottomColor);
+}
+
+.top .tick.active {
+  box-shadow: inset 0 0 5px 2px var(--active-tick-topColor),
+    0 0 0 1px var(--tick-outline-topColor);
+}
+
+.outer {
+  border-radius: 50%;
+  border: 1px solid #222;
+  /* border-bottom: 5px solid #222; */
+  box-shadow: 0 5px 15px 2px black, 0 0 5px 3px black, 0 0 0 1px #444;
+}
+
+.inner {
+  border-radius: 50%;
+}
+
+.inner .grip {
+  position: absolute;
+  width: 8%;
+  height: 8%;
+  bottom: 2%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  box-shadow: 0 0 3px 1px black;
+}
+
+.top-knob .inner .grip {
+  background: var(--knob-top-inner-grip-color);
+}
+
+.bottom-knob .inner .grip {
+  background: var(--knob-bottom-inner-grip-color);
+}
+
+.bottom-knob {
+  position: absolute;
+  z-index: 4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.top-knob {
+  position: absolute;
+  z-index: 5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.circle {
+  position: absolute;
+  z-index: 2;
+  background-color: rgba(33, 33, 33);
+  border-radius: 50%;
+}
+
+.top {
+  z-index: 3;
+  position: absolute;
+  width: 34%;
+  height: 34%;
+}
+
+.bottom {
+  position: absolute;
+  width: 68%;
+  height: 68%;
+}
+
+.properties-label {
+  color: grey;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 190px;
+  width: 100%;
+  z-index: 3;
+}
+
+.property {
+  text-align: center;
+  width: 50%;
+  font-size: 12px;
+  font-weight: bold;
+  font-family: "Inter";
+}
