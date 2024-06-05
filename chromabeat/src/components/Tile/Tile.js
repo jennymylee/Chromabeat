@@ -3,7 +3,6 @@ import "./Tile.css";
 
 export default function Tile(props) {
   const [showText, setShowText] = useState(false);
-  const notes = ["C", "D", "E", "F", "G", "A", "B", "C"];
   const [textColor, setTextColor] = useState(""); // State to store the text color
 
   const backgroundColor = props.color;

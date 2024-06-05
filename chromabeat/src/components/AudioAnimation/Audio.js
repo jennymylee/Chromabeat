@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useRef, useEffect, useState } from "react";
 import "./Animation.css";
 
@@ -24,7 +25,7 @@ export default function Audio(props) {
         audio.current.removeEventListener("timeupdate", updateProgress);
       };
     }
-  }, [props.handleProgress, props.song]);
+  }, [props, props.handleProgress, props.song]);
 
   useEffect(() => {
     if (audio.current && props.isPlaying) {
@@ -40,7 +41,7 @@ export default function Audio(props) {
   const [analyser, setAnalyser] = useState(null);
   const [dataArray, setDataArray] = useState(null);
   const canvasRef = useRef(null);
-
+  console.log(audioSource);
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
