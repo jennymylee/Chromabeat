@@ -2,6 +2,7 @@ import "./Record.css";
 import React from "react";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import PauseIcon from "@mui/icons-material/Pause";
+// record credit: https://codepen.io/elenanelmes/pen/KxXBWd
 
 export default function Record(props) {
   return (
